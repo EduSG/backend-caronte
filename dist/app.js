@@ -1,0 +1,32 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const express_1 = __importDefault(require("express"));
+const user_router_1 = require("./internal/users/routes/user.router");
+const carona_router_1 = __importDefault(require("./internal/caronas/routes/carona.router"));
+const auth_router_1 = __importDefault(require("./internal/auth/routes/auth.router"));
+const mensagem_router_1 = __importDefault(require("./internal/mensagens/routes/mensagem.router"));
+const auth_middleware_1 = require("./middlewares/auth/auth.middleware");
+const error_1 = require("./middlewares/error/error");
+const notification_router_1 = require("./internal/notifications/routes/notification.router");
+const score_router_1 = __importDefault(require("./internal/score/routes/score.router"));
+dotenv_1.default.config();
+console.log(process.env.PGUSER);
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.use("/api", user_router_1.CreateUserRouter);
+app.use("/api", auth_router_1.default);
+app.use("/api", mensagem_router_1.default);
+app.use("/api", auth_middleware_1.authenticateToken, user_router_1.UsuarioRouter);
+app.use("/api", notification_router_1.NotificationRouter);
+app.use("/api", carona_router_1.default);
+app.use("/api", score_router_1.default);
+app.use(error_1.errorMiddleware);
+app.listen(3000, () => {
+    console.log("Servidor rodando na porta 3000");
+});
