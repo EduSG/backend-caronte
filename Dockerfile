@@ -26,5 +26,4 @@ COPY --from=build /usr/src/app/dist ./dist
 
 EXPOSE 7443
 
-CMD ["node", "dist/index.js"]
-
+CMD ["node", "dist/app.js"]  
