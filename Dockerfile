@@ -1,6 +1,7 @@
 # Stage 1: Build
 FROM node:18-alpine AS build
 
+COPY .env .env
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -17,6 +18,8 @@ RUN npm run build
 FROM node:18-alpine
 
 WORKDIR /usr/src/app
+COPY .env .env
+
 
 COPY package*.json ./
 
