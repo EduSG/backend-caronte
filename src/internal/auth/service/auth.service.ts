@@ -44,6 +44,7 @@ export default class AuthService extends UserService {
       score: userSearch.score,
       tipo_usuario: userSearch.tipo_usuario,
       telefone: userSearch.telefone,
+      id: userSearch.id,
     }
 
     
