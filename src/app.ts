@@ -30,6 +30,6 @@ app.use("/api", ScoreRouter);
 app.use("/api", TravelRouter);
 app.use(errorMiddleware);
 
-app.listen(process.env.EXPORT, () => {
+app.listen(7443, () => {
   console.log("Servidor rodando na porta 3000");
 });
