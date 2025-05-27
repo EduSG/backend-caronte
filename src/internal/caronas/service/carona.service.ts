@@ -8,8 +8,12 @@ export class CaronaService {
     return caronaRepository.create(data)
   }
 
-  list(id: number, pagina: number, registrosPagina: number) {
-    return caronaRepository.list(id, pagina, registrosPagina)
+  list_passageiro(id: number, pagina: number, registrosPagina: number) {
+    return caronaRepository.list_passageiro(id, pagina, registrosPagina)
+  }
+
+  list_motorista(id: number, pagina: number, registrosPagina: number) {
+    return caronaRepository.list_motorista(id, pagina, registrosPagina)
   }
 
   getById(id: number) {

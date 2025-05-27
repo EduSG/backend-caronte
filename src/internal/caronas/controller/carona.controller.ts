@@ -10,11 +10,19 @@ export class CaronaController {
     res.status(201).json(novo)
   }
 
-  async list(req: Request, res: Response) {
+  async list_passageiro(req: Request, res: Response) {
     const id = parseInt(req.params.id)
     const pagina = parseInt(req.query.pagina as string) || 1
     const registrosPagina = parseInt(req.query.registrosPagina as string) || 10
-    const resultado = await caronaService.list(id, pagina, registrosPagina)
+    const resultado = await caronaService.list_passageiro(id, pagina, registrosPagina)
+    res.json(resultado)
+  }
+
+  async list_motorista(req: Request, res: Response) {
+    const id = parseInt(req.params.id)
+    const pagina = parseInt(req.query.pagina as string) || 1
+    const registrosPagina = parseInt(req.query.registrosPagina as string) || 10
+    const resultado = await caronaService.list_motorista(id, pagina, registrosPagina)
     res.json(resultado)
   }
 
