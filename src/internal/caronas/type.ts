@@ -11,6 +11,8 @@ export type IDBCarona = {
   id_motorista: number;
   local_destino_motorista: string;
   local_partida_motorista: string;
+  coords_destino: string; 
+  coords_partida: string;
 };
 
 type diasSemana = {
