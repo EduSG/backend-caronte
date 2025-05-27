@@ -43,6 +43,13 @@ export class CaronaController {
     res.json(atualizado)
   }
 
+  async search(req: Request, res: Response) {
+    const data = req.body
+    const atualizado = await caronaService.searchcarona(data)
+    if (!atualizado) res.status(404).json({ erro: 'Carona não encontrado' })
+    res.json(atualizado)
+  }
+
   async delete(req: Request, res: Response) {
     const id = parseInt(req.params.id)
     const deletado = await caronaService.delete(id)

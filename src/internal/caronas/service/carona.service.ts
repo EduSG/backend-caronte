@@ -1,4 +1,4 @@
-import { IDBCarona } from "../type"
+import { IDBCarona, SearchParams } from "../type"
 import { CaronaRepository } from "../repository/carona.repository"
 
 const caronaRepository = new CaronaRepository()
@@ -22,6 +22,10 @@ export class CaronaService {
 
   update(id: number, data: IDBCarona) {
     return caronaRepository.update(id, data)
+  }
+
+  searchcarona(data: SearchParams){
+    return caronaRepository.searchCaronas(data)
   }
 
   delete(id: number) {

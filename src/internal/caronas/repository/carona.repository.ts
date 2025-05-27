@@ -1,5 +1,6 @@
 import pool from "../../../providers/db";
 import { IDBCarona } from "../type";
+import { SearchParams } from "../type";
 
 export class CaronaRepository {
   async create(data: IDBCarona) {
@@ -51,14 +52,21 @@ export class CaronaRepository {
     return result.rows[0];
   }
 
-  async list_passageiro(id: number, pagina: number = 1, registrosPagina: number = 10) {
+  async list_passageiro(
+    id: number,
+    pagina: number = 1,
+    registrosPagina: number = 10,
+  ) {
     const offset = (pagina - 1) * registrosPagina;
     const result = await pool.query(
       `SELECT * FROM carona_oferta WHERE id_passageiro = $1 ORDER BY id LIMIT $2 OFFSET $3`,
       [id, registrosPagina, offset],
     );
 
-    const totalResult = await pool.query("SELECT COUNT(*) FROM carona_oferta WHERE id_passageiro = $1", [id]);
+    const totalResult = await pool.query(
+      "SELECT COUNT(*) FROM carona_oferta WHERE id_passageiro = $1",
+      [id],
+    );
     const total = parseInt(totalResult.rows[0].count, 10);
 
     return {
@@ -69,14 +77,21 @@ export class CaronaRepository {
     };
   }
 
-  async list_motorista(id: number, pagina: number = 1, registrosPagina: number = 10) {
+  async list_motorista(
+    id: number,
+    pagina: number = 1,
+    registrosPagina: number = 10,
+  ) {
     const offset = (pagina - 1) * registrosPagina;
     const result = await pool.query(
       `SELECT * FROM carona_oferta WHERE id_motorista = $1 ORDER BY id LIMIT $2 OFFSET $3`,
       [id, registrosPagina, offset],
     );
 
-    const totalResult = await pool.query("SELECT COUNT(*) FROM carona_oferta WHERE id_motorista = $1", [id]);
+    const totalResult = await pool.query(
+      "SELECT COUNT(*) FROM carona_oferta WHERE id_motorista = $1",
+      [id],
+    );
     const total = parseInt(totalResult.rows[0].count, 10);
 
     return {
@@ -86,8 +101,6 @@ export class CaronaRepository {
       registrosPagina,
     };
   }
-
-
 
   async getById(id: number) {
     const result = await pool.query(
@@ -118,5 +131,66 @@ export class CaronaRepository {
       [id],
     );
     return result.rows[0] || null;
+  }
+
+  async searchCaronas(params: SearchParams) {
+    const {
+      coords_partida: { lat: latP, lon: lonP },
+      coords_destino: { lat: latD, lon: lonD },
+      desvio_partida_m: devP,
+      desvio_destino_m: devD,
+    } = params;
+
+    const R = 6371000; 
+
+    const sql = `
+    SELECT *,
+      (${R} * 2 * asin(
+        sqrt(
+          power(sin(radians((coords_partida->>'lat')::float - $1)/2),2) +
+          cos(radians($1)) *
+          cos(radians((coords_partida->>'lat')::float)) *
+          power(sin(radians((coords_partida->>'lon')::float - $2)/2),2)
+        )
+      )) AS dist_partida,
+      (${R} * 2 * asin(
+        sqrt(
+          power(sin(radians((coords_destino->>'lat')::float - $3)/2),2) +
+          cos(radians($3)) *
+          cos(radians((coords_destino->>'lat')::float)) *
+          power(sin(radians((coords_destino->>'lon')::float - $4)/2),2)
+        )
+      )) AS dist_destino
+    FROM carona_oferta
+    WHERE status = true
+      AND (${R} * 2 * asin(
+            sqrt(
+              power(sin(radians((coords_partida->>'lat')::float - $1)/2),2) +
+              cos(radians($1)) *
+              cos(radians((coords_partida->>'lat')::float)) *
+              power(sin(radians((coords_partida->>'lon')::float - $2)/2),2)
+            )
+         )) <= $5
+      AND (${R} * 2 * asin(
+            sqrt(
+              power(sin(radians((coords_destino->>'lat')::float - $3)/2),2) +
+              cos(radians($3)) *
+              cos(radians((coords_destino->>'lat')::float)) *
+              power(sin(radians((coords_destino->>'lon')::float - $4)/2),2)
+            )
+         )) <= $6
+    ORDER BY dist_partida ASC
+  `;
+    const values = [
+      parseFloat(latP), 
+      parseFloat(lonP),
+      parseFloat(latD), 
+      parseFloat(lonD),
+      devP, 
+      devD, 
+    ];
+
+    const { rows } = await pool.query(sql, values);
+    return rows;
   }
 }

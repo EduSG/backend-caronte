@@ -24,3 +24,15 @@ type diasSemana = {
   6: boolean;
   7: boolean;
 };
+
+export interface SearchParams {
+  coords_partida: { lat: string; lon: string };
+  coords_destino: { lat: string; lon: string };
+  desvio_partida_m: number;
+  desvio_destino_m: number;
+  hora?: string;
+  diaSemana?: number;
+  oferta_min?: number;
+}
+
+
