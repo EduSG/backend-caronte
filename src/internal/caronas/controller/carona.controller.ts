@@ -11,7 +11,7 @@ export class CaronaController {
   }
 
   async list_passageiro(req: Request, res: Response) {
-    const id = parseInt(req.params.id)
+    const id = req.user?.id || 1
     const pagina = parseInt(req.query.pagina as string) || 1
     const registrosPagina = parseInt(req.query.registrosPagina as string) || 10
     const resultado = await caronaService.list_passageiro(id, pagina, registrosPagina)
@@ -19,7 +19,7 @@ export class CaronaController {
   }
 
   async list_motorista(req: Request, res: Response) {
-    const id = parseInt(req.params.id)
+    const id = req.user?.id || 1 
     const pagina = parseInt(req.query.pagina as string) || 1
     const registrosPagina = parseInt(req.query.registrosPagina as string) || 10
     const resultado = await caronaService.list_motorista(id, pagina, registrosPagina)
