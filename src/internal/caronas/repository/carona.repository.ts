@@ -58,7 +58,7 @@ export class CaronaRepository {
       [id, registrosPagina, offset],
     );
 
-    const totalResult = await pool.query("SELECT COUNT(*) FROM carona_oferta");
+    const totalResult = await pool.query("SELECT COUNT(*) FROM carona_oferta WHERE id_passageiro", [id]);
     const total = parseInt(totalResult.rows[0].count, 10);
 
     return {
@@ -76,7 +76,7 @@ export class CaronaRepository {
       [id, registrosPagina, offset],
     );
 
-    const totalResult = await pool.query("SELECT COUNT(*) FROM carona_oferta");
+    const totalResult = await pool.query("SELECT COUNT(*) FROM carona_oferta WHERE id_motorista", [id]);
     const total = parseInt(totalResult.rows[0].count, 10);
 
     return {
