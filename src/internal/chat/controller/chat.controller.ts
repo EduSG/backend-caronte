@@ -4,7 +4,7 @@ import * as chatService from '../service/chat.service';
 // POST /rides/:rideId/conversation
 // cria (ou retorna) a conversa para uma carona
 export async function postConversation(req: Request, res: Response) {
-  const rideId = parseInt(req.params.rideId, 10);
+  const rideId = parseInt(req.params.id, 10);
   const conversation = await chatService.getOrCreateConversation(rideId);
   res.status(201).json(conversation);
 }
