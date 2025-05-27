@@ -24,11 +24,11 @@ app.use(express.json());
 app.use("/api", CreateUserRouter);
 app.use("/api", AuthRouter);
 app.use("/api", MessageRouter);
-app.use("/api", ChatRouter);
 app.use("/api", authenticateToken, UsuarioRouter);
 app.use("/api", NotificationRouter)
 app.use("/api", CaronaRouter);
 app.use("/api", ScoreRouter);
+app.use("/api", ChatRouter);
 app.use("/api", TravelRouter);
 app.use(errorMiddleware);
 
