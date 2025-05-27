@@ -16,6 +16,8 @@ export class CaronaRepository {
       id_motorista,
       local_destino_motorista,
       local_partida_motorista,
+      coords_destino,
+      coords_partida,
     } = data;
 
     const result = await pool.query(
@@ -23,9 +25,10 @@ export class CaronaRepository {
         status, local_destino_passageiro, local_partida_passageiro,
         valor_oferta, dias, horario_carona, id_passageiro,
         data_criacao, ultima_atualizacao, id_motorista,
-        local_destino_motorista, local_partida_motorista
+        local_destino_motorista, local_partida_motorista, coords_destino,
+      coords_partida
       ) VALUES (
-        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14
       ) RETURNING *`,
       [
         status,
@@ -40,6 +43,8 @@ export class CaronaRepository {
         id_motorista,
         local_destino_motorista,
         local_partida_motorista,
+        JSON.stringify(coords_destino),
+        JSON.stringify(coords_partida),
       ],
     );
 
@@ -65,9 +70,10 @@ export class CaronaRepository {
   }
 
   async getById(id: number) {
-    const result = await pool.query("SELECT * FROM carona_oferta WHERE id = $1", [
-      id,
-    ]);
+    const result = await pool.query(
+      "SELECT * FROM carona_oferta WHERE id = $1",
+      [id],
+    );
     return result.rows[0] || null;
   }
 
