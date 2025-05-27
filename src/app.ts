@@ -13,6 +13,7 @@ import { errorMiddleware } from "./middlewares/error/error";
 import { NotificationRouter } from "./internal/notifications/routes/notification.router";
 import ScoreRouter from "./internal/score/routes/score.router";
 import TravelRouter from "./internal/travels/routes/travels.router";
+import ChatRouter from "./internal/chat/routes/chat.router";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api", CreateUserRouter);
 app.use("/api", AuthRouter);
 app.use("/api", MessageRouter);
+app.use("/api", ChatRouter);
 app.use("/api", authenticateToken, UsuarioRouter);
 app.use("/api", NotificationRouter)
 app.use("/api", CaronaRouter);
