@@ -51,11 +51,11 @@ export class CaronaRepository {
     return result.rows[0];
   }
 
-  async list(pagina: number = 1, registrosPagina: number = 10) {
+  async list(id: number, pagina: number = 1, registrosPagina: number = 10) {
     const offset = (pagina - 1) * registrosPagina;
     const result = await pool.query(
-      `SELECT * FROM carona_oferta ORDER BY id LIMIT $1 OFFSET $2`,
-      [registrosPagina, offset],
+      `SELECT * FROM carona_oferta WHERE id = $1 ORDER BY id LIMIT $2 OFFSET $3`,
+      [id, registrosPagina, offset],
     );
 
     const totalResult = await pool.query("SELECT COUNT(*) FROM carona_oferta");
