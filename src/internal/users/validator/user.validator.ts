@@ -32,11 +32,6 @@ export const IDBUserSchema = z.object({
   especificacoes_acessorio: z.any(),
   especificacoes_veiculo: z.any(),
   nome: z.string().min(1, "Nome é obrigatório"),
-  numero_casa: z
-    .number()
-    .int("Número da casa deve ser inteiro")
-    .nonnegative("Número da casa não pode ser negativo")
-    .optional(),
   score: z
     .number()
     .min(0, "Score não pode ser negativo")

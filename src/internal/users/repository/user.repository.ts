@@ -6,8 +6,8 @@ export class UserRepository {
     const result = await pool.query(
       `INSERT INTO usuarios (
         cep, cpf, data_nascimento, especificacoes_acessorio, especificacoes_veiculo,
-        nome, numero_casa, score, status, telefone, tipo_usuario, senha
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+        nome, score, status, telefone, tipo_usuario, senha
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
       [
         data.cep,
         data.cpf,
@@ -15,7 +15,6 @@ export class UserRepository {
         JSON.stringify(data.especificacoes_acessorio),
         JSON.stringify(data.especificacoes_veiculo),
         data.nome,
-        data.numero_casa,
         data.score,
         data.status,
         data.telefone,
