@@ -42,6 +42,20 @@ export class CaronaController {
     if (!atualizado) res.status(404).json({ erro: 'Usuário não encontrado' })
     res.json(atualizado)
   }
+  
+  async setMotorista(req: Request, res: Response) {
+    const id = parseInt(req.params.id)
+    const atualizado = await caronaService.update(id, { id_motorista: id })
+    if (!atualizado) res.status(404).json({ erro: 'Carona não encontrada' })
+    res.json(atualizado)
+  }
+
+  async removeMotorista(req: Request, res: Response) {
+    const id = parseInt(req.params.id)
+    const atualizado = await caronaService.update(id, { id_motorista: null })
+    if (!atualizado) res.status(404).json({ erro: 'Carona não encontrada' })
+    res.json(atualizado)
+  }
 
   async search(req: Request, res: Response) {
     const data = req.body

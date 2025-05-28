@@ -11,6 +11,8 @@ CaronaRouter.get('/carona_motorista', caronaController.list_motorista)
 CaronaRouter.get('/carona/:id', caronaController.getById)
 CaronaRouter.put('/carona/:id', caronaController.update)
 CaronaRouter.delete('/carona/:id', caronaController.delete)
+CaronaRouter.patch('/setMotorista/:id', caronaController.setMotorista)
+CaronaRouter.patch('/removeMorotista/:id', caronaController.removeMotorista)
 CaronaRouter.post('/searchCarona', caronaController.search)
 
 export default CaronaRouter

@@ -20,7 +20,7 @@ export class CaronaService {
     return caronaRepository.getById(id)
   }
 
-  update(id: number, data: IDBCarona) {
+  update(id: number, data: Partial<IDBCarona>) {
     return caronaRepository.update(id, data)
   }
 

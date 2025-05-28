@@ -9,7 +9,7 @@ export class CaronaRepository {
       local_destino_passageiro,
       local_partida_passageiro,
       valor_oferta,
-      dias,
+      dia_semana,
       horario_carona,
       id_passageiro,
       data_criacao,
@@ -24,7 +24,7 @@ export class CaronaRepository {
     const result = await pool.query(
       `INSERT INTO carona_oferta (
         status, local_destino_passageiro, local_partida_passageiro,
-        valor_oferta, dias, horario_carona, id_passageiro,
+        valor_oferta, dia_semana, horario_carona, id_passageiro,
         data_criacao, ultima_atualizacao, id_motorista,
         local_destino_motorista, local_partida_motorista, coords_destino,
       coords_partida
@@ -36,7 +36,7 @@ export class CaronaRepository {
         local_destino_passageiro,
         local_partida_passageiro,
         valor_oferta,
-        JSON.stringify(dias),
+        dia_semana,
         horario_carona,
         id_passageiro,
         data_criacao,

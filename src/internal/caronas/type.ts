@@ -3,12 +3,12 @@ export type IDBCarona = {
   local_destino_passageiro: string;
   local_partida_passageiro: string;
   valor_oferta: number;
-  dias: diasSemana[];
+  dia_semana: number;
   horario_carona: string;
   id_passageiro: number;
   data_criacao: string;
   ultima_atualizacao: string;
-  id_motorista: number;
+  id_motorista: number | null;
   local_destino_motorista: string;
   local_partida_motorista: string;
   coords_destino: string; 
