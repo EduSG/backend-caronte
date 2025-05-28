@@ -45,7 +45,8 @@ export class CaronaController {
   
   async setMotorista(req: Request, res: Response) {
     const id = parseInt(req.params.id)
-    const atualizado = await caronaService.update(id, { id_motorista: id })
+    const data = req.body
+    const atualizado = await caronaService.update(id, data)
     if (!atualizado) res.status(404).json({ erro: 'Carona não encontrada' })
     res.json(atualizado)
   }
